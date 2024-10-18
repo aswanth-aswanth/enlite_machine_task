@@ -71,7 +71,7 @@ const RegisterPage = () => {
             alt="Enlite Prime"
             className="w-8 mr-3"
           />
-          <h3 >Enlite Prime</h3>
+          <h3>Enlite Prime</h3>
         </div>
         <div className="w-full xl:max-w-md">
           <div className="flex justify-between items-center mb-6 border-b pb-2">
@@ -121,10 +121,11 @@ const RegisterPage = () => {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Your Password"
-                  value=""
                 />
               </div>
               <div className="w-full md:w-1/2">
@@ -132,10 +133,11 @@ const RegisterPage = () => {
                   id="retype-password"
                   name="retype-password"
                   type="password"
+                  value={retypePassword}
+                  onChange={(e) => setRetypePassword(e.target.value)}
                   required
                   className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Re-type password"
-                  value=""
                 />
               </div>
             </div>
