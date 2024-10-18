@@ -1,9 +1,38 @@
-import React from "react";
+import { useState } from "react";
+import apiClient from "../config/apiClient";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
+
+    try {
+      const response = await apiClient(`/login`, {
+        email,
+        password,
+      });
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+      }
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage(
+        error.response?.data?.message || "Login failed, please try again."
+      );
+    }
+  };
+
   return (
     <div className="flex h-screen">
-      <div className="hidden lg:block bg-blue-800 w-1/3 xl:w-1/2 p-8">
+      <div className="hidden lg:block bg-[#3F51B5] w-3/5 xl:w-1/2 p-8">
         <div className="text-white text-xl flex items-center">
           <img
             src="/enlight_logo.svg"
@@ -12,7 +41,7 @@ const LoginPage = () => {
           />
           <h3>Enlite Prime</h3>
         </div>
-        <h1 className="text-white text-5xl  mb-4 mt-[240px]">
+        <h1 className="text-white text-5xl mb-4 mt-[240px]">
           Welcome to Enlite Prime
         </h1>
         <p className="text-white text-lg font-bold">
@@ -26,22 +55,34 @@ const LoginPage = () => {
         </a>
       </div>
 
-      <div className="flex flex-col justify-center items-center w-full p-8">
-        <div className="w-full max-w-md">
-          <h2 className="text-3xl font-bold mb-8 text-center text-[#3F51B5]">Sign in</h2>
+      <div className="flex flex-col  items-center w-full p-8">
+        <div className="lg:hidden text-xl flex items-center pt-3 pb-6">
+          <img
+            src="/enlight_logo.svg"
+            alt="Enlite Prime"
+            className="w-8 mr-3"
+          />
+          <h3>Enlite Prime</h3>
+        </div>
+        <div className="w-full xl:max-w-md">
+          <div className="flex justify-between items-center mb-6 border-b pb-2">
+            <h2 className="text-2xl font-bold text-[#3F51B5]">Sign in</h2>
+            <a
+              href="/register"
+              className="text-blue-600 text-sm hover:underline flex items-center"
+            >
+              Create new account
+            </a>
+          </div>
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Your Email
-              </label>
               <input
                 id="email"
                 name="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="john.doe@mail.com"
@@ -49,17 +90,13 @@ const LoginPage = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Your Password
-              </label>
               <div className="relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   className="mt-1 w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="••••••••"
@@ -68,12 +105,17 @@ const LoginPage = () => {
                   <button
                     type="button"
                     className="text-gray-500 hover:text-gray-700"
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    👁
+                    {showPassword ? "🫣" : "👁️"}{" "}
                   </button>
                 </div>
               </div>
             </div>
+
+            {errorMessage && (
+              <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+            )}
 
             <div className="flex items-center justify-between">
               <label className="flex items-center">
@@ -90,25 +132,26 @@ const LoginPage = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200"
             >
-              CONTINUE →
+              {loading ? "Loading..." : "CONTINUE →"}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">Or sign in with</p>
-            <div className="flex justify-center space-x-3 mt-3">
-              <button className="bg-red-500 text-white p-3 rounded-md hover:bg-red-600 transition duration-200">
+            <section className="flex justify-center space-x-3 mt-3 bg-[#F2F2F2] p-[24px] rounded-full">
+              <button className="bg-red-500 text-white p-2 px-3 rounded-md hover:bg-red-600 transition duration-200">
                 Google
               </button>
-              <button className="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-200">
+              <button className="bg-blue-500 text-white p-2 px-3 rounded-md hover:bg-blue-600 transition duration-200">
                 Twitter
               </button>
-              <button className="bg-gray-800 text-white p-3 rounded-md hover:bg-gray-900 transition duration-200">
+              <button className="bg-gray-800 text-white p-2 px-3 rounded-md hover:bg-gray-900 transition duration-200">
                 GitHub
               </button>
-            </div>
+            </section>
           </div>
 
           <div className="mt-6 text-center">

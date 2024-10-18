@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import userRoutes from "./routes/userRoutes";
-import { connectDB } from "./config/db";
-import errorMiddleware from "./middlewares/errorMiddleware";
+import userRoutes from "./routes/userRoutes.js";
+import { connectDB } from "./config/db.js";
+import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 const app = express();
 
