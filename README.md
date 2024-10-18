@@ -1,4 +1,4 @@
-# live-polling-chat-app
+# enlite 
 
 ## Overview
 This project is a web application built with a React.js frontend (using Vite) and a Node.js backend. The application is designed to perform real-time polling that integrates a voting system and a chat feature.
