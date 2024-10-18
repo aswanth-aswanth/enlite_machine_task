@@ -133,9 +133,9 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 transition duration-200"
+              className="w-full bg-[#3442af] text-white p-2 rounded-md font-bold text-sm hover:bg-[#1b2469] transition duration-200"
             >
-              {loading ? "Loading..." : "CONTINUE →"}
+              {loading ? "Loading..." : "CONTINUE"}
             </button>
           </form>
 
