@@ -14,7 +14,7 @@ const LoginPage = () => {
     setErrorMessage("");
 
     try {
-      const response = await apiClient(`/login`, {
+      const response = await apiClient.post(`/login`, {
         email,
         password,
       });
@@ -135,7 +135,7 @@ const LoginPage = () => {
               disabled={loading}
               className="w-full bg-[#3442af] text-white p-2 rounded-md font-bold text-sm hover:bg-[#1b2469] transition duration-200"
             >
-              {loading ? "Loading..." : "CONTINUE"}
+              {loading ? "Load..." : "CONTINUE"}
             </button>
           </form>
 
