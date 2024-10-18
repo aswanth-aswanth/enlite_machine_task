@@ -1,5 +1,6 @@
 import { useState } from "react";
 import apiClient from "../config/apiClient";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -7,6 +8,7 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ const LoginPage = () => {
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
       }
+      navigate("/table");
     } catch (error) {
       setLoading(false);
       setErrorMessage(
